@@ -1,0 +1,208 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+/*
+ * Fairy grunge: a woodland fireside at dusk. Moss and bark, aged parchment,
+ * dusty rose and berry, tarnished gold and a soft ember glow.
+ */
+@theme inline {
+    --font-sans: var(--font-garamond), 'EB Garamond', Georgia, serif;
+    --font-display: var(--font-fell), 'IM Fell English', Georgia, serif;
+}
+
+@theme {
+    --color-forest-950: #0c110d;
+    --color-forest-900: #131a14;
+    --color-forest-800: #1a241b;
+    --color-moss-700: #2a3a2b;
+    --color-moss-600: #364a36;
+    --color-moss-500: #56704f;
+    --color-lichen-300: #a7b78e;
+    --color-lichen-200: #c8d2b0;
+    --color-bark-800: #2e241b;
+    --color-bark-700: #463628;
+    --color-bark-500: #7a5f45;
+    --color-parchment-50: #f6efdd;
+    --color-parchment-100: #ece2c8;
+    --color-parchment-300: #cdbd98;
+    --color-rose-300: #d9a3a6;
+    --color-rose-400: #c47f86;
+    --color-berry-600: #9b2f3f;
+    --color-berry-700: #7a2231;
+    --color-charcoal-800: #24211e;
+    --color-charcoal-900: #191715;
+    --color-gold-300: #dcc283;
+    --color-gold-400: #c3a25a;
+    --color-gold-600: #8a7036;
+    --color-ember-300: #f7c27c;
+    --color-ember-400: #f0a04b;
+    --color-ember-600: #c4692a;
+
+    --animate-drift: drift 14s ease-in-out infinite;
+    --animate-flicker: flicker 3.2s ease-in-out infinite;
+    --animate-ember: ember-glow 2.4s ease-in-out infinite;
+
+    @keyframes drift {
+        0%,
+        100% {
+            transform: translate(0, 0);
+            opacity: 0;
+        }
+        15% {
+            opacity: 0.9;
+        }
+        50% {
+            transform: translate(28px, -46px);
+            opacity: 0.6;
+        }
+        85% {
+            opacity: 0.85;
+        }
+    }
+
+    @keyframes flicker {
+        0%,
+        100% {
+            opacity: 0.85;
+        }
+        45% {
+            opacity: 1;
+        }
+        60% {
+            opacity: 0.7;
+        }
+    }
+
+    @keyframes ember-glow {
+        0%,
+        100% {
+            box-shadow:
+                0 0 0 1px rgb(240 160 75 / 0.55),
+                0 0 14px 2px rgb(240 160 75 / 0.25);
+        }
+        50% {
+            box-shadow:
+                0 0 0 1px rgb(247 194 124 / 0.85),
+                0 0 26px 6px rgb(240 160 75 / 0.4);
+        }
+    }
+}
+
+@layer base {
+    html {
+        color-scheme: dark;
+    }
+
+    body {
+        min-height: 100vh;
+        background-color: var(--color-forest-950);
+        background-image:
+            radial-gradient(
+                ellipse at 50% 110%,
+                rgb(196 105 42 / 0.16),
+                transparent 55%
+            ),
+            radial-gradient(
+                ellipse at 15% 0%,
+                rgb(86 112 79 / 0.22),
+                transparent 50%
+            ),
+            radial-gradient(
+                ellipse at 90% 20%,
+                rgb(122 34 49 / 0.14),
+                transparent 45%
+            );
+        background-attachment: fixed;
+        color: var(--color-parchment-100);
+    }
+
+    /* Film grain over everything; purely decorative. */
+    body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        z-index: 60;
+        pointer-events: none;
+        opacity: 0.11;
+        mix-blend-mode: overlay;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    /* Vignette darkening the edges, like the woods beyond the firelight. */
+    body::after {
+        content: '';
+        position: fixed;
+        inset: 0;
+        z-index: 59;
+        pointer-events: none;
+        background: radial-gradient(
+            ellipse at center,
+            transparent 55%,
+            rgb(0 0 0 / 0.55) 100%
+        );
+    }
+
+    ::selection {
+        background: var(--color-rose-400);
+        color: var(--color-forest-950);
+    }
+}
+
+/* A panel with roughly torn edges, like an old scrap of bark-paper. */
+@utility panel-torn {
+    position: relative;
+    background-color: rgb(26 36 27 / 0.82);
+    border: 1px solid rgb(195 162 90 / 0.22);
+    box-shadow:
+        inset 0 0 40px rgb(0 0 0 / 0.45),
+        0 10px 30px rgb(0 0 0 / 0.35);
+    clip-path: polygon(
+        0% 1.2%,
+        4% 0%,
+        11% 0.8%,
+        19% 0.1%,
+        28% 1%,
+        37% 0.2%,
+        46% 0.9%,
+        55% 0%,
+        64% 0.7%,
+        73% 0.1%,
+        82% 1%,
+        91% 0.3%,
+        100% 1%,
+        99.4% 12%,
+        100% 25%,
+        99.3% 38%,
+        100% 52%,
+        99.5% 66%,
+        100% 80%,
+        99.4% 92%,
+        100% 99%,
+        92% 100%,
+        83% 99.2%,
+        74% 100%,
+        65% 99.3%,
+        56% 100%,
+        47% 99.1%,
+        38% 100%,
+        29% 99.3%,
+        20% 100%,
+        11% 99.2%,
+        3% 100%,
+        0% 98.8%,
+        0.6% 86%,
+        0% 72%,
+        0.5% 58%,
+        0% 44%,
+        0.7% 30%,
+        0% 16%
+    );
+}
+
+@utility text-glow {
+    text-shadow:
+        0 0 12px rgb(240 160 75 / 0.45),
+        0 0 2px rgb(240 160 75 / 0.6);
+}
